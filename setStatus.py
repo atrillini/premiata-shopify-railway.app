@@ -2,6 +2,7 @@ from time import sleep
 import pandas as pd
 import yaml
 import mysql.connector
+import os
 from sh import Sh
 
 class bcolors:
@@ -48,7 +49,7 @@ def db_connect(mysql_cfg):
     )
 
 with open("./config.yml", "r") as ymlfile:
-    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
+    #cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
     shopify = Sh(cfg['premiata']['shopify'])
     #prods = shopify.get_all_products()
    
