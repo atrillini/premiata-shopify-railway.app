@@ -48,9 +48,19 @@ def db_connect(mysql_cfg):
         database=mysql_cfg['db_name']
     )
 
-with open("./config.yml", "r") as ymlfile:
+
     #cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
-    shopify = Sh(cfg['premiata']['shopify'])
+    config = {
+    "premiata_shopify": {
+        "api_key": os.getenv("premiata-shopofy-api_key"),
+        "token": os.getenv("premiata-shopofy-token"),
+        "shop_url": os.getenv("premiata-shopofy_shop_url"),
+        "location_id": os.getenv("premiata-shopofy-location_id"),
+        "version": os.getenv("premiata-shopofy-version")
+    }
+   }
+
+    shopify = Sh(cfg['premiata_shopify'])
     #prods = shopify.get_all_products()
    
     dbconn = db_connect(cfg2['mysql'])
