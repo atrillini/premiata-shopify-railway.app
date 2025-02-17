@@ -16,6 +16,15 @@ cfg2 = {
             'stocks_table': 'premiata_stocks',
         }
     }
+cfg = {
+    "premiata_shopify": {
+        "api_key": os.getenv("premiata-shopofy-api_key"),
+        "token": os.getenv("premiata-shopofy-token"),
+        "shop_url": os.getenv("premiata-shopofy_shop_url"),
+        "location_id": os.getenv("premiata-shopofy-location_id"),
+        "version": os.getenv("premiata-shopofy-version")
+    }
+   }
 
 def db_connect(mysql_cfg):
     return mysql.connector.connect(
