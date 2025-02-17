@@ -19,6 +19,8 @@ class bcolors:
 class Sh:
     def __init__(self, cfg):
         # set shopify site
+        print(cfg)
+        exit()
         self.endpoint = (
             "https://"
             + cfg["api_key"]
@@ -33,7 +35,7 @@ class Sh:
         self.shop_url = cfg["shop_url"]
         self.token = cfg["token"]
         self.api_key = cfg["api_key"]
-
+        
         shopify.ShopifyResource.set_site(self.endpoint)
 
     def create_product(self, product_data):
