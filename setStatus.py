@@ -54,6 +54,7 @@ with open("./config.yml", "r") as ymlfile:
    
     dbconn = db_connect(cfg2['mysql'])
     cur = dbconn.cursor(buffered=True)
+    '''
     for p in prods:
         id = get_product_db(cur,cfg2['mysql']['products_table'],p)
         if id is not None and len(id) > 2:
@@ -63,7 +64,7 @@ with open("./config.yml", "r") as ymlfile:
         else:
             print('prodotto '+p+ ' non trovato nel db')
                       
-
+    '''
    
 
     
