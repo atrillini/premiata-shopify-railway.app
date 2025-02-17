@@ -47,12 +47,20 @@ def get_product_db(cursor, table, sku):
 
 dbconn = db_connect(cfg2['mysql'])
 cur = dbconn.cursor(buffered=True)
-print('provo a fare la connessione al db')
-print(dbconn)
-print('provo a fare la connessione a shopify')
 shopify = Sh(cfg['premiata_shopify'])
-print(shopify)
 
+prods = [
+   "MAS07088", "LUC07101", "MOED6443", "MIQD6074", "MOED7058", "CON06980", "CON06979", "BSKD6925", "BOED7031", "BSKD6923", "M4519LA"
+]
+
+for p in prods:
+        id = get_product_db(cur,cfg2['mysql']['products_table'],p)
+        if id is not None and len(id) > 2:
+            id = id[2]
+            shopify.update_product_status(id, 'DRAFT')
+            print('prodotto '+p+ ' aggiornato stato')
+        else:
+            print('prodotto '+p+ ' non trovato nel db')
 
 
     
