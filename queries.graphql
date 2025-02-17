@@ -1,0 +1,132 @@
+
+mutation priceListFixedPricesAdd(
+  $priceListId: ID!
+  $prices: [PriceListPriceInput!]!
+) {
+  priceListFixedPricesAdd(priceListId: $priceListId, prices: $prices) {
+    userErrors {
+      field
+      message
+    }
+  }
+}
+mutation CreateTranslation($id: ID!, $translations: [TranslationInput!]!) {
+  translationsRegister(resourceId: $id, translations: $translations) {
+    userErrors {
+      message
+      field
+    }
+    translations {
+      locale
+      key
+      value
+    }
+  }
+}
+mutation productVariantsBulkDelete($productId: ID!, $variantsIds: [ID!]!) {
+  productVariantsBulkDelete(productId: $productId, variantsIds: $variantsIds) {
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+mutation productVariantDelete($id: ID!) {
+  productVariantDelete(id: $id) {
+    deletedProductVariantId
+    product {
+      id
+      title
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+
+mutation collectionReorderProducts($id: ID!, $moves: [MoveInput!]!) {
+  collectionReorderProducts(id: $id, moves: $moves) {
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+ query ProductVariantDetails($id: ID!) {
+    product(id: $id) {
+         variants (first: 20) { 
+      edges { 
+        node {
+          id
+          sku
+          title
+          inventoryQuantity
+          inventoryItem {
+            id
+  
+          }
+        }
+      }
+    }
+     
+    }
+}
+
+query GetContextPriceForProduct ($id: ID!, $country: CountryCode!)
+{
+  productVariant(id: $id) {
+    contextualPricing(context: {country: $country}) {
+      price {
+        amount
+        currencyCode
+      }
+    }
+  }
+}
+
+
+mutation MetafieldsSet($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields {
+      key
+      namespace
+      value
+      createdAt
+      updatedAt
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}
+mutation UpdateProductStatus($productId: ID!, $status: ProductStatus!) {
+  productUpdate(input: { id: $productId, status: $status }) {
+    product {
+      id
+      status
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+mutation addTagToProduct($id: ID!, $tags: [String!]!) {
+  productUpdate(input: {id: $id, tags: $tags}) {
+    product {
+      id
+      tags
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

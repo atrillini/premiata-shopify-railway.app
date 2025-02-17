@@ -1,0 +1,55 @@
+mutation fileCreate($files: [FileCreateInput!]!) {
+  fileCreate(files: $files) {
+    files {
+      createdAt
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+query getfileurl($query: String) {
+files (first: 1, query: $query) {
+    edges {
+      node {
+        ... on MediaImage {
+          image {
+            id
+            url
+            altText
+            height
+            width
+          }
+        }
+      }
+    }
+  }
+  }
+query checkFiles {
+files (first: 1,  reverse:true) {
+    edges {
+      node {
+        ... on MediaImage {
+          image {
+            id
+            url
+            altText
+            height
+            width
+          }
+        }
+      }
+    }
+  }
+  }
+query getOrderIdByName($orderName: String!) {
+  orders(first: 1, query: $orderName) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
