@@ -65,6 +65,7 @@ def db_connect(mysql_cfg):
    
     dbconn = db_connect(cfg2['mysql'])
     cur = dbconn.cursor(buffered=True)
+    print('fino a qui ci arrivo')
     '''
     for p in prods:
         id = get_product_db(cur,cfg2['mysql']['products_table'],p)
