@@ -19,8 +19,6 @@ class bcolors:
 class Sh:
     def __init__(self, cfg):
         # set shopify site
-        print(cfg)
-        exit()
         self.endpoint = (
             "https://"
             + cfg["api_key"]
