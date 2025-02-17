@@ -26,10 +26,22 @@ def db_connect(mysql_cfg):
         database=mysql_cfg['db_name']
     )
 
+def get_product_db(cursor, table, sku):
+    query = ("SELECT * FROM " + table + " WHERE sku = '" + sku + "'")
+
+    cursor.execute(query)
+    res = cursor.fetchone()
+
+    return res
+
+
 dbconn = db_connect(cfg2['mysql'])
 cur = dbconn.cursor(buffered=True)
 print('provo a fare la connessione al db')
 print(dbconn)
+print('provo a fare la connessione a shopify')
+shopify = Sh(cfg['premiata']['shopify'])
+print(shopify)
 
 
 
