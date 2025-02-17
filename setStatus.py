@@ -50,7 +50,7 @@ cur = dbconn.cursor(buffered=True)
 print('provo a fare la connessione al db')
 print(dbconn)
 print('provo a fare la connessione a shopify')
-shopify = Sh(cfg['premiata']['shopify'])
+shopify = Sh(cfg['premiata_shopify'])
 print(shopify)
 
 
