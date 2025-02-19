@@ -223,7 +223,7 @@ def update_stocks(cfg):
         
         #if(sku != 'SKYBV_12031'):
             #continue
-'''
+        '''
         if sku not in  ("PMG12_11262",
 "PMG12_13493",
 "PMG12_13506",
@@ -235,7 +235,7 @@ def update_stocks(cfg):
 "CONNY_13299",
 "MASE_13199"):
                 continue
-'''    
+        '''    
         # get product from db
         db_prod = get_product_4d(db_cursor, mysql_cfg['products_table'], sku)
        
