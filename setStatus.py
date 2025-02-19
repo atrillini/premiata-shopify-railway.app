@@ -26,7 +26,7 @@ cfg = {
         "version": os.getenv("premiata-shopofy-version")
     }
    }
-
+shopify = Sh(cfg['premiata_shopify'])
 def db_connect(mysql_cfg):
     return mysql.connector.connect(
         user=mysql_cfg['db_user'],
