@@ -191,10 +191,10 @@ def update_stocks(cfg):
     log_string = ''
 
     # stock file url
-    file_path = cfg['stock_url']
+    file_path = cfg2['stock_url']
 
     #mysql conf
-    mysql_cfg = cfg['mysql']
+    mysql_cfg = cfg2['mysql']
 
     # db stock table name
     stock_table_name = mysql_cfg['stocks_table']
