@@ -112,6 +112,14 @@ def get_product_db(cursor, table, sku):
 
     return res
 
+def get_all_stock_db(cursor, table, sku):
+    query = ("SELECT * FROM " + table + " WHERE code = '" + sku + "'")
+
+    cursor.execute(query)
+    res = cursor.fetchall()
+
+    return res
+
 def get_product_4d(cursor, table, codice_4d):
     query = ("SELECT * FROM " + table + " WHERE codice_4d = '" + codice_4d + "'")
     
