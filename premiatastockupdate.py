@@ -291,7 +291,7 @@ def update_stocks(cfg):
 
             if('34U' in db_prod[6]):
                  if var['size'] == '34':
-                    var['size'] = 'U'
+                    var['size'] = 'Default title'
                 
             if('156|258' in db_prod[6]):
                  if var['size'] == '1':
