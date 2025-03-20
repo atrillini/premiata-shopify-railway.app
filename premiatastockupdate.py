@@ -347,7 +347,7 @@ def update_stocks(cfg):
     # call update stocks
 #dbconn = db_connect(cfg['mysql'])
 #cur = dbconn.cursor(buffered=True)
-update_stocks(cfg)
+update_stocks(cfg2)
 #prods = shopify.get_all_products()
 #shopify.updateTag(prods, 'changefw22prices_u2')
 #exit()
