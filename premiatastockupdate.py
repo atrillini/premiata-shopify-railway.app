@@ -95,11 +95,12 @@ def map_stocks(stock_data_processed,db_cursor):
 def read_stocks_file(file_path):
     return pd.read_csv(file_path, sep=',')
 
-def db_connect(mysql_cfg):
+def dbConnect(mysql_cfg):
     return mysql.connector.connect(
         user=mysql_cfg['db_user'],
         password=mysql_cfg['db_password'],
         host=mysql_cfg['host'],
+        port=mysql_cfg['port'],
         database=mysql_cfg['db_name']
     )
 
