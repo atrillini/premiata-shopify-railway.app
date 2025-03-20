@@ -6,6 +6,7 @@ from time import sleep
 from datetime import datetime
 import mysql.connector
 import yaml
+import os
 
 cfg2 = {
         'stock_url': 'https://oldpremiata.pilcommunication.com/4d/stock/stock.csv',
