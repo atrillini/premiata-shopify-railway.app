@@ -7,23 +7,28 @@ from datetime import datetime
 import mysql.connector
 import yaml
 
-with open("./config.yml", "r") as ymlfile:
-    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
-    shopify = Sh(cfg['premiata']['shopify'])
-
-
-cfg = {
+cfg2 = {
         'stock_url': 'https://oldpremiata.pilcommunication.com/4d/stock/stock.csv',
         'mysql': {
-            'host': '35.205.119.178', 
+            'host': 'crossover.proxy.rlwy.net', 
             'db_user': 'root', 
-            'db_password': '8iNL4BM7ij7HsFPE',
-            'db_name': 'ml_giacenze', 
+            'db_password': 'ICReplqqhsfqsimGVguywqGrBtvVWAWJ',
+            'db_name': 'railway', 
+            'port':'31393',
             'products_table': 'premiata_products', 
-            'stocks_table': 'premiata_stocks'
+            'stocks_table': 'premiata_stocks',
         }
     }
-
+cfg = {
+    "premiata_shopify": {
+        "api_key": os.getenv("premiata-shopofy-api_key"),
+        "token": os.getenv("premiata-shopofy-token"),
+        "shop_url": os.getenv("premiata-shopofy_shop_url"),
+        "location_id": os.getenv("premiata-shopofy-location_id"),
+        "version": os.getenv("premiata-shopofy-version")
+    }
+   }
+shopify = Sh(cfg['premiata_shopify'])
 def process_stocks(stock_df):
     stocks = []
     for index, stock_data in stock_df.iterrows():
