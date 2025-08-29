@@ -196,6 +196,7 @@ def format_string_file(s):
     return string_formatted
 
 def update_stocks(cfg):
+    print('inizio')    
     log_string = ''
 
     # stock file url
