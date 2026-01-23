@@ -34,11 +34,11 @@ def process_stocks(stock_df):
     stocks = []
     for index, stock_data in stock_df.iterrows():
         stock = {
-            'store': stock_data[0],
-            'code': stock_data[1],
-            'var': stock_data[2],
-            'qty': stock_data[3],
-            "pcode": stock_data[4]
+            'store': stock_data.iloc[0],
+            'code': stock_data.iloc[1],
+            'var': stock_data.iloc[2],
+            'qty': stock_data.iloc[3],
+            "pcode": stock_data.iloc[4]
         }
         stocks.append(stock)
     return stocks
