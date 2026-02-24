@@ -342,7 +342,7 @@ def execute_graphql(query, variables=None):
 
 #prices = pd.read_csv('./geo_fw24_agg.csv', sep=';', header=None)
 prices = process_prices(df)
-prods = get_all_products_by_tag(["price230226_3"], mode="AND")
+prods = get_all_products_by_tag(["ss26"], mode="AND")
 
 
 #prods = shopify.get_all_products()
