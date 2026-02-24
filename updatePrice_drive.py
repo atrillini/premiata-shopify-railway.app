@@ -37,7 +37,7 @@ creds = Credentials.from_service_account_info(sa, scopes=[
 req = Request()
 # Autenticazione e connessione al client di Google Sheets
 try:
-    creds.refresh(request)
+    creds.refresh(req)
     print("Token OK")
 except Exception as e:
     print("Refresh error:", e)
