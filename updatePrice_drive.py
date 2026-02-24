@@ -12,14 +12,16 @@ import requests
 import re
 from decimal import Decimal, InvalidOperation
 
-print("SA client_email:", sa.get("client_email"))
-print("Has literal \\n in private_key:", "\\n" in sa.get("private_key",""))
-print("Has real newline in private_key:", "\n" in sa.get("private_key",""))
-# Definire l'ambito delle API
+
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
 sa = json.loads(os.environ["GOOGLE_SA_JSON"])
 pk = sa["private_key"].replace("\\n", "\n")
+
+print("SA client_email:", sa.get("client_email"))
+print("Has literal \\n in private_key:", "\\n" in sa.get("private_key",""))
+print("Has real newline in private_key:", "\n" in sa.get("private_key",""))
+# Definire l'ambito delle API
 
 print("private_key_id:", sa["private_key_id"])
 print("sha256 prefix:", hashlib.sha256(pk.encode()).hexdigest()[:16])
