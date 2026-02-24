@@ -1,6 +1,5 @@
 from pickle import TRUE
 import time
-from constants import bcolors
 from sh import Sh
 import pandas as pd
 import yaml
@@ -357,12 +356,12 @@ for pr in prods:
                         if(k == 'price'):
                             for v in p.variants:
                                 if(price_obj['price']['amount'] == ''):
-                                    print(bcolors.FAIL + '[\] No price found for product ' + pr['node']['metafield']['value'] + bcolors.ENDC) # type: ignore
+                                    print('[\] No price found for product ' + pr['node']['metafield']['value']) # type: ignore
                                     continue
                                 if(float(v.price) != float(price_obj['price']['amount'])):
                                     v.price = price_obj['price']['amount']
                                     v.save()
-                                    print(bcolors.OKBLUE + 'Updated product ' + str(p.id) + ' - ' + pr['node']['metafield']['value'] + ' -> ' + 'ITALY' + bcolors.ENDC)
+                                    print('Updated product ' + str(p.id) + ' - ' + pr['node']['metafield']['value'] + ' -> ' + 'ITALY')
 
                         
                             #continue
@@ -373,7 +372,7 @@ for pr in prods:
                                 actualpriceobj = shopify.GetContextPriceForProduct(v.id,price_obj[k]['country_code'])
                                 actualprice = actualpriceobj['data']['productVariant']['contextualPricing']['price']['amount']
                                 if(price_obj['price']['amount'] == ''):
-                                    print(bcolors.FAIL + '[\] No price found for product ' + pr['node']['metafield']['value'] + bcolors.ENDC) # type: ignore
+                                    print('[\] No price found for product ' + pr['node']['metafield']['value']) # type: ignore
                                     continue
                                 if(float(price_obj[k]['amount']) != float(actualprice)):
                                     po.append({
@@ -386,12 +385,12 @@ for pr in prods:
                                 #else:
                                     #print('il prodotto '+m.value+ ' del listino '+k+' non ha variazione di prezzo, non lo aggiorno')
                          if(po):
-                            print(bcolors.OKBLUE + '[] Updating product ' + str(p.id) + ' - ' + pr['node']['metafield']['value'] + ' -> ' + k + bcolors.ENDC)
+                            print('[] Updating product ' + str(p.id) + ' - ' + pr['node']['metafield']['value'] + ' -> ' + k)
                             shopify.update_price(price_obj[k]['plid'], po)
                             time.sleep(0.5)
                          
                     
                 
                 else:
-                    print(bcolors.FAIL + '[\] No price found for product ' + pr['node']['metafield']['value'] + bcolors.ENDC) # type: ignore
+                    print('[\] No price found for product ' + pr['node']['metafield']['value']) # type: ignore
     
