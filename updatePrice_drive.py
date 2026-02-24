@@ -14,8 +14,7 @@ import requests
 import re
 from decimal import Decimal, InvalidOperation
 
-googleobj = """
-{
+googleobj = {
   "type": "service_account",
   "project_id": "pil-associati",
   "private_key_id": "4d2dff048ca02e646154cbfa18b1050b87179601",
@@ -28,26 +27,24 @@ googleobj = """
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/api-python%40pil-associati.iam.gserviceaccount.com",
   "universe_domain": "googleapis.com"
 }
-"""
+
 
 
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
-sa = json.loads(googleobj)
+#sa = json.loads(googleobj)
 pk = "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCN1XJ8Ai/nCi5n\nwyXW+tu/jyrRTVz3HypBmPdaqXOtlLij9bhyK4alLleev17KqxxbQWPhqm7rvuWe\nicSyeWexFkb8DPW2mVOXU9lPWXzpcwfZfF0z1D9/cDYuoX/pMfWPeA/yA1bv5KXM\nPW6phjbtU1eeWtTO4AoQnl086O+23dM2gYNe+69nS4qN0GYOBxcS+MDIQJ4Ypivl\norWNMdE9Zd4rQSN3QW18fRBakVIDYjybl3B+9Iz/+3ezRMXxz1aCR3Kjh7JE2Jeb\nbGUEK4lT3NsjCZ/9vKbhP04XpgkTW67HR5TiSRxhP78riF92mgTUx2He8baoPtRp\nUzg1hcrPAgMBAAECggEAJuifq/JDptttqIxp5IRT5USGp/1Tm/1iL7WhYa8rqzop\nvtzpOPTEzqqcYdG41NtE/6m8F0uUezqWrju4CIfykKt+VKXPgESmoFRhwHlZoYcr\nZ5fMz6uRscmcK4WlW9kXNsDmiussncm5TAKsSXgmuEtNNYVQbOIcELwI8u0p2Z2v\nNkdSfFzqR5+cifQ6f40VAqxqBaYMULi1w0Cye1ykK9u8x873zLAk/WWmrQlevqrG\nGO1ueH1C7oKZ7AQRfDnGEorTdEODHhuSrH3UAzQpmPxBeTsLu2yiCzo/AzzFoKQo\nYaGbDUL0q6IeRN4/j5Gly3wH1BlQ5h2VSVyItxCj7QKBgQDFlIxoFui8sm4EhIlp\nOumSzS+kDONqwHnFNGMQRq4hwLkY6xR444xlkpGglvfvT356RZWRt4v8ohhH1Mpq\nJSfb4ihapNUJrwH1d1FzcudHmqryM/on87AxEJOeVWObrapaz5+T+/rlipIJPhh2\n8WA7CPTZ+DvsKNq12RuoNEfJDQKBgQC3xUcBwU0Vto3hmcXwKXmfTVkC2BVmVqDM\nyca5BG2p/29edP+conIPsBIfn3zhuSTJMkfZslhnTdbgzdbthP+sLGo4Tz/rpn7f\ne5Op7BxEyGIYlepa2WjNVNeY0AKxyEnF2xQMVetsZBzbOjNZj6crOepc5ZrCAxNk\nNx/ucfR0SwKBgQDDyuEYhRs9YtQDRhOlY+vyvcJoHx19vB7vfWptxpzodcL3Hn27\nDkMipIwLR4+KZow/PpVpQSpHv5mwFP5BEXDeRM8YhB9Y6URXq1XbwhHOs0aTnU5Y\nKPSAqpyeWp/Ktd4K/5RzYVDQBvGQlyhHNgrWdZmuJn+7FwElE3CEzsoUQQKBgHlp\nKqpsLSNlQoOD9pPesu2eSmponGrKXN4viMz/sfwYOFntblrrr/PRXYfq9LSkfzs1\nruaSv3kwogBPvemabtgvV9Xv9ckYbMX1fO9MgLiosraPhQ+Uh3rwzKe29bDDJIpF\nXQ9xTGKGGdJ0tyw6jjUuxDmvr/jx00Pob343Z0vVAoGAcpvkGL8xvVkQ0Ucbet3v\ngs3h6p7xuP64WqTLW48iIMdOSPS7mZ+BB706yBGGd8ldjQ72+VVZ27TxJFdf5eNF\nLyrd9eLjFn9mipS7tV1WKQX4oFO8HeISs/AWlEKbhziQRkvIvmpiRsall2nMSyqS\nAScIk4eN/LMaFS0djK16vEA=\n-----END PRIVATE KEY-----\n",
 
 
-print("SA client_email:", sa.get("client_email"))
-print("Has literal \\n in private_key:", "\\n" in sa.get("private_key",""))
-print("Has real newline in private_key:", "\n" in sa.get("private_key",""))
+print("SA client_email:", googleobj["client_email"])
 # Definire l'ambito delle API
 
-print("private_key_id:", sa["private_key_id"])
-print("sha256 prefix:", hashlib.sha256(pk.encode()).hexdigest()[:16])
+print("private_key_id:", googleobj["private_key_id"])
+print("sha256 prefix:", hashlib.sha256(googleobj["private_key"].encode()).hexdigest()[:16])
 # Fix fondamentale per Railway / env vars (newline nella private_key)
 # Caricare le credenziali dal file JSON
 #creds = ServiceAccountCredentials.from_json_keyfile_name("pil-associati-4d2dff048ca0.json", scope)
-creds = Credentials.from_service_account_info(sa, scopes=[
+creds = Credentials.from_service_account_info(googleobj, scopes=[
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ])
