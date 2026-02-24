@@ -14,44 +14,6 @@ import requests
 import re
 from decimal import Decimal, InvalidOperation
 
-googleobj = {
-  "type": "service_account",
-  "project_id": "pil-associati",
-  "private_key_id": "f9cd2a4b6ef0122407e90ba76d6b6bbb333e5adc",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDek279vcJud2qW\nBnzD9eF2Y2Y4zA/C3Ata699IBBiFiYZVnLwKSH26evEBbltGjUMLyZF4sdXp6Ts0\nu8uLQ/V43PGfqujs5qtCLg18F64nTVr9bLfus0Mp34eVelFNM283p2pfR28FVbaV\nj2tgnhc4/Y8eo9GNaM3uS8ZkjaAWfhIdrsHyjAmTs25MRYGh8aBvvT2i/VhY2rRM\n7po64oNVCu98tKnGsgvNQJ39eCqihh+QWRHztlMXAxIo6haZjIU8Btej1o3cAIet\n+YTUVD/B0R8pcMGSoEiWljqC2XL+SO9iVWdj/3AwuRTcfVally/cahsV0i6wPOf7\n69hrdsZjAgMBAAECggEAFNkafF9Z5vRTN4TutYGX13mtXtnpCrIxyMJvQlT1Nwzl\nWFTmCCXiIPrYYu9DUshzOezCLjFPfX7V3N/6S4EswmAaVypbHFWUP7lbP1RjK6tD\nP+7/C4zJrb0SUMi0SixB2U9aggeJjqZeA9ml5Sw/C0eKMFndNwb/bbgLTT/heY8I\nyjXv5nPs52sIXOcjWCi4ZxYHlw5K69HgEuCzYbn7cjJVWSZU2Jf2d7lKDoHsxNZC\n1i5vMHIuGpjDqoqu3ewaCIPulyqBF/rS2Hdjt0nB2zFycgdod6q9/jVpQerkeOp+\nEUvWhqSnX0NLDOYUS/CneYCv2NsGv6YnCbns/sSTgQKBgQDyXxo2bOiW0R4AfJrm\nePbGTUUI/JLDmsepZE8MQQJW79Dv0OViH3KXT68arhOTLTkt2JCMZYX1dp+gfSz8\nTpcnSdWPDQ5ivtqsQzuPJ9wq/GtSklAuRAe4tfKZuN9Q/J16pHdVTYF1sJihOhpK\nSw2WpcoVkCmE8rOx708RK3QWJQKBgQDrF2CF48hznxxxtMZlz0nJPTmKLdgmOaYC\nCUk4BcYL3BbDzq/HzzF7ZgCldZfxswFypQwiZ6drGxkB4WjcGjynJouCnxOq5ii9\n68LKIq1NR9FTAbK1mPihvgXYwSE73ssxTZRY71NbiFsvH1ZSG5wjk7L7Vn+IYLIU\nP0hszy4v5wKBgQDrtgHQHGq3AfijkIs0yT9163/QFZLGGKlE3ADkcfTMh74y/H2Y\nx+yxqxUoZVM0Ny78nzk00SdOaWcktZgiaGwoEW5YCOKMtgAEt/4cYy+DvqjBTPod\nhJvdz1V4morUQFkHBRvpIc9dnblSUyduST+V2vaFsgYu/bo0uf+zOwdS4QKBgQCq\nk4u1mlEXk5tP5ZsOxBkFqybU2+65zZpmX9aAj6/jaw4ZhR6GHBALOTe+1lQpS3kB\ndkAXtp4DWOYMN0GecmsP3Sfc3w+mMNne8/GiOQcFy9ZWJCVHHndI5FfZrkgu6LkG\nTQQWg5A4GfgPeO1pJh9ksQZs15YxnfeYOVKToMAigQKBgHA7YEvpysKRqwL57l+/\n6ylmhUUw4NF4qk5O25OtKqrpHI7uXGMDEt9cizflNnYTZGWCNlbRx1owhUsPmcqJ\njsHeweH6gcWa0u2cMxosAUm5FhWuIfB+tV7LFV5RK1gcQcA5ZkjCaVFGL1ne/6fY\nsQla9khPmV3EtQvtKlWuM9V0\n-----END PRIVATE KEY-----\n",
-  "client_email": "api-python@pil-associati.iam.gserviceaccount.com",
-  "client_id": "117759516401184102852",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/api-python%40pil-associati.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-
-
-print("SA client_email:", googleobj["client_email"])
-# Definire l'ambito delle API
-
-print("private_key_id:", googleobj["private_key_id"])
-print("sha256 prefix:", hashlib.sha256(googleobj["private_key"].encode()).hexdigest()[:16])
-# Fix fondamentale per Railway / env vars (newline nella private_key)
-# Caricare le credenziali dal file JSON
-#creds = ServiceAccountCredentials.from_json_keyfile_name("pil-associati-4d2dff048ca0.json", scope)
-creds = Credentials.from_service_account_info(googleobj, scopes=[
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-])
-req = Request()
-# Autenticazione e connessione al client di Google Sheets
-try:
-    creds.refresh(req)
-    print("Token OK")
-except Exception as e:
-    print("Refresh error:", e)
-exit()
-
 _num_re = re.compile(r'[-+]?\d+(?:[.,]\d+)?')
 
 query_get_products_by_tag = """
