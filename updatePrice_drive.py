@@ -12,14 +12,25 @@ import requests
 import re
 from decimal import Decimal, InvalidOperation
 
-sa = json.loads(os.environ["GOOGLE_SA_JSON"])
 print("SA client_email:", sa.get("client_email"))
 print("Has literal \\n in private_key:", "\\n" in sa.get("private_key",""))
 print("Has real newline in private_key:", "\n" in sa.get("private_key",""))
-creds = service_account.Credentials.from_service_account_info(sa, scopes=SCOPES)
+# Definire l'ambito delle API
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
-request = google.auth.transport.requests.Request()
+sa = json.loads(os.environ["GOOGLE_SA_JSON"])
+pk = sa["private_key"].replace("\\n", "\n")
 
+print("private_key_id:", sa["private_key_id"])
+print("sha256 prefix:", hashlib.sha256(pk.encode()).hexdigest()[:16])
+# Fix fondamentale per Railway / env vars (newline nella private_key)
+# Caricare le credenziali dal file JSON
+#creds = ServiceAccountCredentials.from_json_keyfile_name("pil-associati-4d2dff048ca0.json", scope)
+creds = Credentials.from_service_account_info(sa, scopes=[
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+])
+# Autenticazione e connessione al client di Google Sheets
 try:
     creds.refresh(request)
     print("Token OK")
