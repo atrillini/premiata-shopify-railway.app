@@ -382,8 +382,6 @@ for pr in prods:
                          for v in p.variants:
                                 
                                 actualpriceobj = shopify.GetContextPriceForProduct(v.id,price_obj[k]['country_code'])
-                                print(actualpriceobj)
-                                exit()
                                 actualprice = actualpriceobj['data']['productVariant']['contextualPricing']['price']['amount']
                                 if(price_obj['price']['amount'] == ''):
                                     print('[\] No price found for product ' + pr['node']['metafield']['value']) # type: ignore
