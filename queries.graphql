@@ -32,21 +32,6 @@ mutation productVariantsBulkDelete($productId: ID!, $variantsIds: [ID!]!) {
   }
 }
 
-mutation productVariantDelete($id: ID!) {
-  productVariantDelete(id: $id) {
-    deletedProductVariantId
-    product {
-      id
-      title
-    }
-    userErrors {
-      field
-      message
-    }
-  }
-}
-
-
 mutation collectionReorderProducts($id: ID!, $moves: [MoveInput!]!) {
   collectionReorderProducts(id: $id, moves: $moves) {
     userErrors {
