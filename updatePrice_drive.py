@@ -7,6 +7,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2.service_account import Credentials
 import json
+import os
 import requests
 import re
 from decimal import Decimal, InvalidOperation
@@ -272,15 +273,17 @@ def process_prices(df):
 # Definire l'ambito delle API
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
+sa = json.loads(os.environ["GOOGLE_SA_JSON"])
+# Fix fondamentale per Railway / env vars (newline nella private_key)
+sa["private_key"] = sa["private_key"].replace("\\n", "\n")
 # Caricare le credenziali dal file JSON
 #creds = ServiceAccountCredentials.from_json_keyfile_name("pil-associati-4d2dff048ca0.json", scope)
-creds = Credentials.from_service_account_file('pil-associati-4d2dff048ca0.json', scopes=[
+creds = Credentials.from_service_account_info(sa, scopes=[
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ])
 # Autenticazione e connessione al client di Google Sheets
 client = gspread.authorize(creds)
-
 
 # Apertura del foglio di calcolo tramite l'ID
 spreadsheet = client.open_by_key('1xbS99GN35XFNdLNmHFC0jjRNnqCm9AOEpLAQJinE9KQ')
