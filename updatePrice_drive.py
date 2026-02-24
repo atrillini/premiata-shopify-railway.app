@@ -12,6 +12,12 @@ import requests
 import re
 from decimal import Decimal, InvalidOperation
 
+sa = json.loads(os.environ["GOOGLE_SA_JSON"])
+print("SA client_email:", sa.get("client_email"))
+print("Has literal \\n in private_key:", "\\n" in sa.get("private_key",""))
+print("Has real newline in private_key:", "\n" in sa.get("private_key",""))
+exit()
+
 _num_re = re.compile(r'[-+]?\d+(?:[.,]\d+)?')
 
 query_get_products_by_tag = """
