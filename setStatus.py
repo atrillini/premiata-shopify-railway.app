@@ -209,7 +209,39 @@ def update_stocks(cfg):
     db_cursor = db_connection.cursor(buffered=True)
 
     stocks = map_stocks(stock_processed,db_cursor)
-   
+
+    allprod = get_all_product_db(db_cursor,products_table_name)
+    prod_to_reset = []
+        
+    for dbpr in allprod:
+        pff = dbpr[1]
+        fourdcode = dbpr[7]
+        if(fourdcode not in stocks.keys()):
+            prod_to_reset.append(pff)
+            print(pff +' - ' + fourdcode + ' non è nel file di stock')
+
+    for p_r in prod_to_reset:
+        if(p_r == 'GIFTCARD'):
+            continue
+        allstock = get_all_stock_db(db_cursor,stock_table_name,p_r)
+        for st in allstock:
+            inv_id = st[6]
+            new_qty = 0
+            qty = st[3]
+            size = st[2]
+            sku = st[1]
+
+            if(qty != new_qty):
+                if(shopify.update_stock(inv_id, new_qty)):
+                        update_stock_record(
+                            db_cursor, stock_table_name, db_connection, sku, size, new_qty)
+                        print('[+] ' + sku + ' -> Updated variant and reset ' + str(size) + ' from ' + str(qty) + ' to -> ' + str(new_qty))
+                        
+                else:
+                       
+                       print('Error while updating stock ' + str(size) + ' -> ' + sku)
+
+
     '''
     for s in stocks.keys():
         
