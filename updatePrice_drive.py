@@ -306,14 +306,21 @@ df = pd.DataFrame(rows, columns=headers)
     #exit()
 
 
-with open("./config.yml", "r") as ymlfile:
-    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
-    shopify = Sh(cfg['premiata']['shopify'])
+cfg = {
+    "premiata_shopify": {
+        "api_key": os.getenv("premiata-shopofy-api_key"),
+        "token": os.getenv("premiata-shopofy-token"),
+        "shop_url": os.getenv("premiata-shopofy_shop_url"),
+        "location_id": os.getenv("premiata-shopofy-location_id"),
+        "version": os.getenv("premiata-shopofy-version")
+    }
+   }
+shopify = Sh(cfg['premiata_shopify'])
 
 # Configurazione
-SHOPIFY_STORE_URL = 'https://'+cfg['premiata']['shopify']['shop_url']  # Sostituisci con il tuo URL
-API_VERSION = cfg['premiata']['shopify']['version']  # Usa la versione più recente dell'API
-ACCESS_TOKEN = cfg['premiata']['shopify']['token']  # Sostituisci con il tuo token
+SHOPIFY_STORE_URL = 'https://'+cfg['premiata_shopify']['shop_url']  # Sostituisci con il tuo URL
+API_VERSION = cfg['premiata_shopify']['version']  # Usa la versione più recente dell'API
+ACCESS_TOKEN = cfg['premiata_shopify']['token']  # Sostituisci con il tuo token
 #METAOBJECT_DEFINITION_ID = "gid://shopify/MetaobjectDefinition/17010622730"  # metaobjectfatture
 GRAPHQL_ENDPOINT = f"{SHOPIFY_STORE_URL}/admin/api/{API_VERSION}/graphql.json"
 
