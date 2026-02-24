@@ -34,6 +34,7 @@ creds = Credentials.from_service_account_info(sa, scopes=[
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
 ])
+req = Request()
 # Autenticazione e connessione al client di Google Sheets
 try:
     creds.refresh(request)
