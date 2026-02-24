@@ -6,6 +6,7 @@ import yaml
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2.service_account import Credentials
+from google.auth.transport.requests import Request
 import json
 import hashlib
 import os
