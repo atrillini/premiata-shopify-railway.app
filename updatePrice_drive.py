@@ -14,7 +14,8 @@ import requests
 import re
 from decimal import Decimal, InvalidOperation
 
-googleobj = '{
+googleobj = """
+{
   "type": "service_account",
   "project_id": "pil-associati",
   "private_key_id": "4d2dff048ca02e646154cbfa18b1050b87179601",
@@ -26,7 +27,8 @@ googleobj = '{
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/api-python%40pil-associati.iam.gserviceaccount.com",
   "universe_domain": "googleapis.com"
-}'
+}
+"""
 
 
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
