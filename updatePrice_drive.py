@@ -16,6 +16,15 @@ sa = json.loads(os.environ["GOOGLE_SA_JSON"])
 print("SA client_email:", sa.get("client_email"))
 print("Has literal \\n in private_key:", "\\n" in sa.get("private_key",""))
 print("Has real newline in private_key:", "\n" in sa.get("private_key",""))
+creds = service_account.Credentials.from_service_account_info(sa, scopes=SCOPES)
+
+request = google.auth.transport.requests.Request()
+
+try:
+    creds.refresh(request)
+    print("Token OK")
+except Exception as e:
+    print("Refresh error:", e)
 exit()
 
 _num_re = re.compile(r'[-+]?\d+(?:[.,]\d+)?')
